@@ -1,0 +1,39 @@
+version: '3'
+
+tasks:
+  status:
+    cmds:
+      - '{{.SONOBUOY_BIN}} status --kubeconfig {{.KUBECONFIG}}'
+
+  rerun-last-failed:
+    cmds:
+      - '{{.SONOBUOY_BIN}} run  --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}} --rerun-failed {{.LATEST_TAR}} --plugin-env=e2e.E2E_EXTRA_ARGS="{{.E2E_EXTRA_ARGS}}"'
+    vars:
+      LATEST_TAR:
+        sh: ls -Art *.tar.gz | tail -n 1
+
+  run:
+    cmds:
+      - '{{.SONOBUOY_BIN}} run --plugin-env=e2e.E2E_EXTRA_ARGS={{.E2E_EXTRA_ARGS}} --mode=certified-conformance --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}}'
+
+  extract:
+    cmds:
+      - '{{.SONOBUOY_BIN}} retrieve --kubeconfig {{.KUBECONFIG}}'
+
+  delete:
+    cmds:
+      - '{{.SONOBUOY_BIN}} delete --kubeconfig {{.KUBECONFIG}}'
+      - 'sleep 20'
+      - 'sudo microk8s.kubectl get ns sonobuoy || true'
+
+  results:
+    cmds:
+      - 'tail -n 30 {{.RESULTS_FILE}}'
+
+env:
+  KUBECONFIG: "/var/snap/microk8s/current/credentials/client.config"
+  SONOBUOY_BIN: "sudo go/bin/sonobuoy"
+  E2E_EXTRA_ARGS: "--non-blocking-taints=node-role.kubernetes.io/controller --ginkgo.v"
+  K8S_VERSION: "v1.29.0"
+  EXTRACT_DIR: "results/"
+  RESULTS_FILE: "results/plugins/e2e/results/global/e2e.log"
