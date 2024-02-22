@@ -2,11 +2,13 @@
 Taskfile for running k8s e2e tests
 
 ## Requirements
-Install Go: `sudo snap install go --classic`
+* A Kubernetes cluster with 2 nodes.
 
-Install Sonobuoy: `go install github.com/vmware-tanzu/sonobuoy@latest`
+* Install Go: `sudo snap install go --classic`
 
-Install Task: `snap install task --classic`
+* Install Sonobuoy: `go install github.com/vmware-tanzu/sonobuoy@latest`
+
+* Install Task: `snap install task --classic`
 
 ## Usage
 
@@ -22,4 +24,15 @@ task results
 Rerun last failed tests (using last created .tar.gz in the current directory):
 ```
 task rerun-last-failed
+```
+
+## Commands
+```
+task: Available tasks for this project:
+* delete:                  Cleans up sonobuoy resources.
+* extract:                 Creates a directory for the test results and extracts the latest .tar.gz to it.
+* rerun-last-failed:       Rerun last test run that had failed tests.
+* results:                 Show the results from the last test run.
+* run:                     Run the k8s conformance e2e test suite.
+* status:                  Check the status of the current test run.
 ```
