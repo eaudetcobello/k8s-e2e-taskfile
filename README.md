@@ -36,3 +36,16 @@ task: Available tasks for this project:
 * run:                     Run the k8s conformance e2e test suite.
 * status:                  Check the status of the current test run.
 ```
+
+## Configuration
+The various tasks can be configured by modifying the different keys at the end of the Taskfile.yml:
+These are the defaults:
+```
+env:
+  KUBECONFIG: "/var/snap/microk8s/current/credentials/client.config"
+  SONOBUOY_BIN: "sudo go/bin/sonobuoy"
+  E2E_EXTRA_ARGS: "--non-blocking-taints=node-role.kubernetes.io/controller --ginkgo.v"
+  K8S_VERSION: "v1.29.0"
+  EXTRACT_DIR: "results"
+  RESULTS_FILE: "{{.EXTRACT_DIR}}/plugins/e2e/results/global/e2e.log"
+```
