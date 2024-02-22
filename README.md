@@ -38,7 +38,8 @@ task: Available tasks for this project:
 ```
 
 ## Configuration
-The various tasks can be configured by modifying the different keys at the end of the Taskfile.yml:
+The various tasks can be configured by modifying the different keys at the end of the Taskfile.yml.
+
 These are the defaults:
 ```
 env:
