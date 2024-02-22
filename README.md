@@ -3,7 +3,9 @@ Taskfile for running k8s e2e tests
 
 ## Requirements
 Install Go: `sudo snap install go --classic`
+
 Install Sonobuoy: `go install github.com/vmware-tanzu/sonobuoy@latest`
+
 Install Task: `snap install task --classic`
 
 ## Usage
