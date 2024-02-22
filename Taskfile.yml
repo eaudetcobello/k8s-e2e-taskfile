@@ -1,31 +1,50 @@
 version: '3'
 
+vars:
+  LATEST_TAR:
+    sh: ls -Art *.tar.gz | tail -n 1
+
 tasks:
   status:
+    desc: "Check the status of the current test run."
+    summary: |
+      Check the status of the current test run.
+
+      Tip: use 'watch -n 5 task status' to monitor results.
     cmds:
       - '{{.SONOBUOY_BIN}} status --kubeconfig {{.KUBECONFIG}}'
 
   rerun-last-failed:
+    desc: "Rerun last test run that had failed tests."
+    summary: |
+      Rerun last test run that had failed tests.
+
+      This tasks finds the latest .tar.gz file and hands it off to sonobuoy to
+      re-run the tests.
     cmds:
       - '{{.SONOBUOY_BIN}} run  --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}} --rerun-failed {{.LATEST_TAR}} --plugin-env=e2e.E2E_EXTRA_ARGS="{{.E2E_EXTRA_ARGS}}"'
-    vars:
-      LATEST_TAR:
-        sh: ls -Art *.tar.gz | tail -n 1
 
   run:
+    desc: "Run the k8s conformance e2e test suite."
+
     cmds:
       - '{{.SONOBUOY_BIN}} run --plugin-env=e2e.E2E_EXTRA_ARGS={{.E2E_EXTRA_ARGS}} --mode=certified-conformance --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}}'
 
   extract:
+    desc: "Creates a directory for the test results and extracts the latest .tar.gz to it."
+
     cmds:
       - '{{.SONOBUOY_BIN}} retrieve --kubeconfig {{.KUBECONFIG}}'
       - 'mkdir -p {{.EXTRACT_DIR}}'
       - 'tar xvf {{.LATEST_TAR}} -C {{.EXTRACT_DIR}}'
-    vars:
-      LATEST_TAR:
-        sh: ls -Art *.tar.gz | tail -n 1
 
   delete:
+    desc: "Cleans up sonobuoy resources."
+    summary: |
+      Cleans up sonobuoy resources.
+
+      Use this after a test run before running 'task run' again.
+
     cmds:
       - '{{.SONOBUOY_BIN}} delete --kubeconfig {{.KUBECONFIG}}'
       - echo "Waiting for the sonobuoy namespace to be deleted..."
@@ -33,6 +52,8 @@ tasks:
       - echo "Sonobuoy resources should be purged. Use "sudo microk8s.kubectl get ns sonobuoy" to verify."
 
   results:
+    desc: "Show the results from the last test run."
+
     cmds:
       - 'tail -n 30 {{.RESULTS_FILE}}'
 
@@ -42,3 +63,4 @@ env:
   E2E_EXTRA_ARGS: "--non-blocking-taints=node-role.kubernetes.io/controller --ginkgo.v"
   K8S_VERSION: "v1.29.0"
   EXTRACT_DIR: "results/"
+  RESULTS_FILE: "results/plugins/e2e/results/global/e2e.log"
