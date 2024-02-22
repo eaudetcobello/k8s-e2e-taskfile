@@ -2,6 +2,9 @@
 Taskfile for running k8s e2e tests. Defaults to K8s 1.29 (See [Configuration](#configuration)).
 
 ## Requirements
+
+These are all the requirements for k8s e2e testing, not just this taskfile.
+
 * A Kubernetes cluster with 2 nodes.
 
 * Install Go: `sudo snap install go --classic`
