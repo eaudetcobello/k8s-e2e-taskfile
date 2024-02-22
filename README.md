@@ -1,5 +1,5 @@
 # k8s-e2e-taskfile
-Taskfile for running k8s e2e tests. Defaults to K8s 1.29 E2E tests (See [Configuration](#configuration)).
+Taskfile for running k8s e2e tests. Defaults to K8s 1.29 (See [Configuration](#configuration)).
 
 ## Requirements
 * A Kubernetes cluster with 2 nodes.
