@@ -1,7 +1,7 @@
 # k8s-e2e-taskfile
 Taskfile for running k8s e2e tests. Defaults to K8s 1.29 (See [Configuration](#configuration)).
 
-## Requirements
+## Prerequisites
 
 * A Kubernetes cluster with 2 nodes.
 
@@ -15,7 +15,7 @@ Taskfile for running k8s e2e tests. Defaults to K8s 1.29 (See [Configuration](#c
 
 Run:
 ```
-wget https://github.com/eaudetcobello/k8s-e2e-taskfile/blob/main/Taskfile.yml
+wget https://raw.githubusercontent.com/eaudetcobello/k8s-e2e-taskfile/main/Taskfile.yml
 ```
 
 ## Usage
