@@ -31,6 +31,11 @@ Rerun last failed tests (using last created .tar.gz in the current directory):
 task rerun-last-failed
 ```
 
+Cleanup Sonobuoy resources before running `task run` again:
+```
+task delete
+```
+
 ## Commands
 ```
 task: Available tasks for this project:
