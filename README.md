@@ -14,7 +14,9 @@ Taskfile for running k8s e2e tests. Defaults to K8s 1.29 (See [Configuration](#c
 
 Run tests:
 
-`task run`
+```
+task run
+```
 
 Check results:
 ```
