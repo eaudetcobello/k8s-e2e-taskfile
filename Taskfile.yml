@@ -19,12 +19,18 @@ tasks:
   extract:
     cmds:
       - '{{.SONOBUOY_BIN}} retrieve --kubeconfig {{.KUBECONFIG}}'
+      - 'mkdir -p {{.EXTRACT_DIR}}'
+      - 'tar xvf {{.LATEST_TAR}} -C {{.EXTRACT_DIR}}'
+    vars:
+      LATEST_TAR:
+        sh: ls -Art *.tar.gz | tail -n 1
 
   delete:
     cmds:
       - '{{.SONOBUOY_BIN}} delete --kubeconfig {{.KUBECONFIG}}'
-      - 'sleep 20'
-      - 'sudo microk8s.kubectl get ns sonobuoy || true'
+      - echo "Waiting for the sonobuoy namespace to be deleted..."
+      - sleep 20
+      - echo "Sonobuoy resources should be purged. Use "sudo microk8s.kubectl get ns sonobuoy" to verify."
 
   results:
     cmds:
@@ -36,4 +42,3 @@ env:
   E2E_EXTRA_ARGS: "--non-blocking-taints=node-role.kubernetes.io/controller --ginkgo.v"
   K8S_VERSION: "v1.29.0"
   EXTRACT_DIR: "results/"
-  RESULTS_FILE: "results/plugins/e2e/results/global/e2e.log"
