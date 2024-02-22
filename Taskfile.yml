@@ -62,5 +62,5 @@ env:
   SONOBUOY_BIN: "sudo go/bin/sonobuoy"
   E2E_EXTRA_ARGS: "--non-blocking-taints=node-role.kubernetes.io/controller --ginkgo.v"
   K8S_VERSION: "v1.29.0"
-  EXTRACT_DIR: "results/"
-  RESULTS_FILE: "results/plugins/e2e/results/global/e2e.log"
+  EXTRACT_DIR: "results"
+  RESULTS_FILE: "{{.EXTRACT_DIR}}/plugins/e2e/results/global/e2e.log"
