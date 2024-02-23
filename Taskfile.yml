@@ -28,7 +28,7 @@ tasks:
     desc: "Run the k8s conformance e2e test suite."
 
     cmds:
-      - '{{.SONOBUOY_BIN}} run --plugin-env=e2e.E2E_EXTRA_ARGS={{.E2E_EXTRA_ARGS}} --mode=certified-conformance --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}}'
+      - '{{.SONOBUOY_BIN}} run --plugin-env=e2e.E2E_EXTRA_ARGS="{{.E2E_EXTRA_ARGS}}" --mode=certified-conformance --kubernetes-version={{.K8S_VERSION}} --kubeconfig {{.KUBECONFIG}}'
 
   extract:
     desc: "Creates a directory for the test results and extracts the latest .tar.gz to it."
